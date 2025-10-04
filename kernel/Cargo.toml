@@ -1,0 +1,14 @@
+[package]
+name = "kernel"
+version = "0.0.0"
+edition = "2024"
+
+[[bin]]
+bench = false
+test = false
+doctest = false
+name = "kernel"
+path = "src/main.rs"
+
+[dependencies]
+shared = { path = "../shared" }

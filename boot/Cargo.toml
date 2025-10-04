@@ -1,0 +1,15 @@
+[package]
+name = "boot"
+version = "0.0.0"
+edition = "2024"
+
+[[bin]]
+bench = false
+test = false
+doctest = false
+name = "boot"
+path = "src/main.rs"
+
+[dependencies]
+uefi = "0.35.0"
+shared = { path = "../shared" }

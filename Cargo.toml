@@ -1,0 +1,13 @@
+[package]
+name = "karlos"
+version = "0.0.0"
+edition = "2024"
+
+[profile.release]
+panic = "abort"
+
+[profile.dev]
+panic = "abort"
+
+[workspace]
+members = ["boot", "kernel", "shared"]
