@@ -110,3 +110,6 @@ http-client.private.env.json
 
 # Ignore signatures folder
 /signature
+
+# Ignore iso directory, which containes the binaries
+/iso
