@@ -4,7 +4,6 @@
 mod elf_headers;
 
 use crate::elf_headers::*;
-use core::arch::asm;
 use core::mem::{size_of, transmute};
 use core::panic::PanicInfo;
 use core::ptr::write;
@@ -24,7 +23,6 @@ use uefi::table::cfg::{ACPI_GUID, ACPI2_GUID};
 
 const KERNEL_PATH: &uefi::CStr16 = cstr16!("\\KERNEL.ELF");
 const KERNEL_LOAD_ADDR: u64 = 0x100000; // 1 MB, classic location
-const KERNEL_STACK_PAGES: usize = 16;
 
 type KernelEntry = extern "sysv64" fn(boot_info_ptr: *const BootInfo) -> !;
 
@@ -87,16 +85,6 @@ fn main() -> Status {
         }
     }
     // Kernel now loaded into KERNEL_LOAD_ADDRESS
-
-    // Setting up stack for kernel
-    let kernel_stack_base = allocate_pages(
-        AllocateType::AnyPages,
-        MemoryType::LOADER_DATA,
-        KERNEL_STACK_PAGES,
-    )
-    .unwrap();
-    let kernel_stack_top =
-        unsafe { kernel_stack_base.offset((KERNEL_STACK_PAGES * 4096) as isize) };
 
     // Now getting framebuffer info
     let binding = open_protocol_exclusive::<GraphicsOutput>(
@@ -161,14 +149,6 @@ fn main() -> Status {
     // Jump into kernel
     let kernel_entry_addr = ehdr.e_entry as usize;
     let kernel_entry_fn: KernelEntry = unsafe { transmute(kernel_entry_addr) };
-
-    // Setup stack before enter
-    unsafe {
-        asm!(
-            "mov rsp, {}",
-            in(reg) kernel_stack_top.as_ptr()
-        );
-    }
 
     // Enter kernel
     kernel_entry_fn(boot_info_addr as *const BootInfo);
