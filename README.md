@@ -15,7 +15,8 @@ Only official and non-unstable **release ISOs** will be signed by the project. I
 ---
 ## ℹ️ Info
 - This project is targeting x86_64 and only using UEFI currently, no BIOS booting support at **ALL**
-- 
+- The kernel could panic, which will literally halt the CPU
+- There are barely some checking in the bootloader, this could lead to UB
 ---
 ## Building from source
 ``` bash
@@ -31,6 +32,13 @@ make build
 ### From Native
 ``` bash
 make native-build
+```
+### Signing Bootloader
+``` bash
+# From docker
+make sign-bl
+# From native
+make native-sign-bl
 ```
 
 ---
