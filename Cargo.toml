@@ -9,5 +9,12 @@ panic = "abort"
 [profile.dev]
 panic = "abort"
 
+[lib]
+name = "karlos"
+path = "src/lib.rs"
+test = false
+doctest = false
+bench = false
+
 [workspace]
 members = ["boot", "kernel", "shared"]
