@@ -1,5 +1,5 @@
 //! CPU-arch-depended codes. Like assembly instructions.
-//! Functions in this reexported in this module are dangerous, use it at your own risk
+//! Functions re-exported in this module are dangerous, use them at your own risk
 
 #[cfg(target_arch = "aarch64")]
 pub mod aarch64;
