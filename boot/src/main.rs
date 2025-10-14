@@ -121,16 +121,16 @@ fn main() -> Status {
         .as_ptr() as *mut BootInfo;
 
     // Get memory map after all allocations
-    let mmap = match memory_map(MemoryType::LOADER_DATA) {
+    let memory_map = match memory_map(MemoryType::LOADER_DATA) {
         Ok(r) => r,
         Err(_) => return Status::LOAD_ERROR,
     };
-    let mmap_buf = mmap.buffer();
+    let memory_map_buf = memory_map.buffer();
 
     let mm_info = MemoryMapInfo {
-        ptr: mmap_buf.as_ptr(),
-        size: mmap_buf.len(),
-        desc_size: mmap_buf.len() / mmap.entries().count(),
+        ptr: memory_map_buf.as_ptr(),
+        size: memory_map_buf.len(),
+        desc_size: memory_map_buf.len() / memory_map.entries().count(),
     };
 
     let boot_info = BootInfo {
