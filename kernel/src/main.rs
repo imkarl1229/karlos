@@ -9,7 +9,7 @@ use shared::boot_info::BootInfo;
 use crate::arch::current::*;
 
 #[unsafe(no_mangle)]
-extern "sysv64" fn _start(boot_info_ptr: *const BootInfo) -> ! {
+extern "Rust" fn _start(boot_info_ptr: *const BootInfo) -> ! {
     unsafe { disable_interrupt() }
     assert_ne!(core::ptr::null(), boot_info_ptr);
 

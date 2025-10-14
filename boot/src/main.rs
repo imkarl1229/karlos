@@ -24,7 +24,7 @@ use uefi::table::cfg::{ACPI_GUID, ACPI2_GUID};
 const KERNEL_PATH: &uefi::CStr16 = cstr16!("\\KERNEL.ELF");
 const KERNEL_LOAD_ADDR: u64 = 0x100000; // 1 MB, classic location
 
-type KernelEntry = extern "sysv64" fn(boot_info_ptr: *const BootInfo) -> !;
+type KernelEntry = extern "Rust" fn(boot_info_ptr: *const BootInfo) -> !;
 
 #[entry]
 fn main() -> Status {
